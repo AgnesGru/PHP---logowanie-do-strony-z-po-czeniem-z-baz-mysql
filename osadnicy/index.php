@@ -25,6 +25,11 @@
 	Dziękuję Mirosław Zelent za super kursy!!!
 	<br/>
 	<br/>
+		
+	<a href = "rejestracja.php">Rejestracja - załóż darmowe konto!</a>
+	
+	<br/>
+	<br/>
 	
 	<form action = "zaloguj.php" method = "post" >
 	
