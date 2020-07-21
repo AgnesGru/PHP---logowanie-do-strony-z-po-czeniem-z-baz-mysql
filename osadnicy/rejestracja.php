@@ -69,10 +69,56 @@
 		}
 		
 		// Sprawdz CAPTcha
-		$sekret = 
+		$sekret = '6LeWgrIZAAAAAFZDUbGBJJyk6OMcOfUwfFmmaIQt';
+		
+		$sprawdz = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$sekret.'&response='.$_POST['g-recaptcha-response']);
+		
+		$odpowiedz = json_decode($sprawdz);
+		
+		if ($odpowiedz->success==false)
+		{
+			$wszystko_ok = false;
+			$_SESSION['e_boot'] = 'Napewno nie jesteś robotem?';				
+		}
+		
+		require_once "connect.php";
+		mysqli_report(MYSQLI_REPORT_STRICT);
 		
 		
-		if ($wszystko_ok ==true)
+		try
+		{
+			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+			if ($polaczenie->connect_errno != 0)
+			{
+				throw new Exception(mysqli_connect_errno());
+				# błąd połączenia, rzuć wyjątkiem
+			}
+			else
+			{
+				// czy email istnieje?
+				$rezultat = $polaczenie->query("SELECT id FROM uzytkownicy WHERE email='$email'");
+				
+				if (!$rezultat) throw new Exception($polaczenie->error);
+				
+				$ile_takich_maili = $rezultat->num_rows;
+				if ($ile_takich_maili>0)
+				{
+					$wszystko_ok = false;
+					$_SESSION['e_email'] = 'Istnieje już konto przypisane do tego adresu emai!';				
+				}	
+				
+			
+				$polaczenie->close();
+			}
+		}
+		catch(Exception $e)
+		{
+			echo '<span style = "color:red;">Błąd serwera</span>';
+			// echo '<br/>Informacja developerska:'.$e;
+			# zakomentowany kod jak w wersji produkcyjnej, żeby nie wyświetlać błędów 
+		}
+		
+		if ($wszystko_ok == true)
 		{
 			// Hura, wszystkie testy zaliczone, dodajemy gracza do bazy		
 			echo 'Udana walidacja!'; 
@@ -164,6 +210,18 @@
 		
 		?>
 		<div class = "g-recaptcha" data-sitekey="6LeWgrIZAAAAAJZ4XmWBeW4RpTSRFddiDQVwhKCM"></div>
+		
+		<?php
+		
+			if (isset($_SESSION['e_boot']))
+			{
+				
+				echo '<div class = "error">'.$_SESSION['e_boot'].'</div>';
+				unset($_SESSION['e_boot']);
+				
+			}
+		
+		?>
 		<br/>
 		<input type = "submit" value = "Zarejestruj się"/>
 
