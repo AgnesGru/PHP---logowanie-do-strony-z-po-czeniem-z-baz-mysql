@@ -52,7 +52,7 @@
 					$_SESSION['drewno'] = $wiersz['drewno'];		
 					$_SESSION['kamien'] = $wiersz['kamien'];		
 					$_SESSION['zboze'] = $wiersz['zboze'];		
-					$_SESSION['email'] = $wiersz['amail'];		
+					$_SESSION['email'] = $wiersz['email'];		
 					$_SESSION['dnipremium'] = $wiersz['dnipremium'];		
 
 					unset($_SESSION['blad']);
