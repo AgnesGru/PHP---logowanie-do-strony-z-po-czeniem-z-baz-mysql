@@ -4,34 +4,35 @@
 	
 	if (isset($_POST['email']))
 	{
-		// udana walidacja? 
+		//udana walidacja? na poczatku zakładamy że wszystko się udało i flaga ma wartość true
 		$wszystko_ok = true;
 		
-		// sprawdzamy nickname
+		// sprawdzamy nickname, wykonamy serię testów sprawdzających, ale najpierw pobiermy wartiść z formularza do nowej zmiennej
 		$nick = $_POST['nick']; 
 	
 		// sprawdzenie dlugosci nicka
 		if ((strlen($nick)<3) || (strlen($nick)>30))
 		{
 			$wszystko_ok = false;
-			$_SESSION['e_nick']='Nick musi posiadać od trzech do 30 znaków';
+			$_SESSION['e_nick']='Nick musi posiadać od 3 do 30 znaków';
 		}
-		
-		if(ctype_alnum($nick)==false)
+		// sprawdzanie czy znaki są alfanumeryczne
+		if (ctype_alnum($nick)==false)
 		{
 			$wszystko_ok = false;
 			$_SESSION['e_nick']='Nick może składać się tylko z liter (ang alfabet) i cyfr';
 		}
 		
-		// sprawdz poprawność e-mail		
+		// sprawdz poprawność e-mail, ale najpierw pobiermy wartiść z formularza do nowej zmiennej
 		$email = $_POST['email'];
 		$emailB = filter_var($email, FILTER_SANITIZE_EMAIL);
+		// FILTER_SANITIZE_EMAIL usuwa niedozwolone znaki
 		
 		if ((filter_var($emailB, FILTER_VALIDATE_EMAIL) == false) || ($emailB!=$email))
 		{
 			$wszystko_ok = false;
 			$_SESSION['e_email'] = 'Podaj poprawny adres email';
-			
+			// to jest komunikat o błędzie, teraz to trzeba pokazać pod imputem dla maila			
 		}
 			
 		// Sprawdz poprawnoć hasła
@@ -187,10 +188,11 @@
 			?>" name = "nick"/><br/>
 		
 		<?php
-		
+			//  to się wyświetli gdy nick będzie zły, czyli ustawiona jest zmienna $_SESSION['e_nick'], e jak error
 			if (isset($_SESSION['e_nick']))
 			{				
 				echo '<div class = "error">'.$_SESSION['e_nick'].'</div>';
+				// trzeba wyczyścić zmienną bo to info zostanie na strinie nawet gdy nick zostanie wpisany poprawnie
 				unset($_SESSION['e_nick']);				
 			}
 		
@@ -208,10 +210,8 @@
 		
 			if (isset($_SESSION['e_email']))
 			{
-				
 				echo '<div class = "error">'.$_SESSION['e_email'].'</div>';
-				unset($_SESSION['e_email']);
-				
+				unset($_SESSION['e_email']);				
 			}
 		
 		?>
