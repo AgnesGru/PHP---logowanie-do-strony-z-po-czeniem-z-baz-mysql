@@ -46,7 +46,7 @@
 				{
 					
 					$_SESSION['zalogowany'] = true;
-					
+					# zmienne przechowujące dane w bazie
 					$_SESSION['id'] = $wiersz['id'];
 					$_SESSION['user'] = $wiersz['user'];		
 					$_SESSION['drewno'] = $wiersz['drewno'];		
@@ -61,11 +61,12 @@
 					# przekierowanie z uzyciem naglowka HTTP
 				}
 				else 
-				{				
-				$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';
-				header('Location: index.php');
+				{		
+					# dobry login i złe hasło
+					$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';
+					header('Location: index.php');
 				}
-				
+			# nie znaleziono loginu
 			} else {
 				$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';
 				header('Location: index.php');
