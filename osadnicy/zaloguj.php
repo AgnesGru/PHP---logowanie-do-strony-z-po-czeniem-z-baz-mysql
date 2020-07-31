@@ -16,7 +16,7 @@
 	// sprawdzamy czy dane do zalogowania sie zgadzają
 	try
 	{
-		$polaczenie = new mysqli($host, $db_user, 'aga', $db_name);
+		$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
 	
 		if ($polaczenie->connect_errno != 0)
 		{
