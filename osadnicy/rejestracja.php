@@ -79,7 +79,7 @@
 		if ($odpowiedz->success==false)
 		{
 			$wszystko_ok = false;
-			$_SESSION['e_boot'] = 'Napewno nie jesteś robotem?';				
+			$_SESSION['e_boot'] = 'Chyba jednak jesteś robotem?!';				
 		}
 		// pamiętaj że przed publikacją swojego projektu wygenerować nowe numery dla recaptcha bo te są dla localhost
 		
@@ -117,7 +117,7 @@
 					$_SESSION['e_email'] = 'Istnieje już konto do tego adresu emai!';				
 				}	
 				
-				// czy nick jest zareazerwowany?
+				// czy nick jest zareazerwowany 
 				$rezultat = $polaczenie->query("SELECT id FROM uzytkownicy WHERE user='$nick'");
 				
 				if (!$rezultat) throw new Exception($polaczenie->error);
@@ -135,7 +135,9 @@
 					if($polaczenie->query("INSERT INTO uzytkownicy VALUES (NULL, '$nick', '$haslo_hash', '$email', 100, 100, 100, 14)"))
 					{
 						$_SESSION['udanarejestracja']=true;
+						// zmienna sesyjna $_SESSION['udanarejestracja']
 						header('Location: witamy.php');
+						// przekierowanie do strony
 					}
 					else
 					{
