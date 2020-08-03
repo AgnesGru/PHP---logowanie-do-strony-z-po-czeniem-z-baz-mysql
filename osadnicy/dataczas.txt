@@ -1,0 +1,21 @@
+echo time()."<br>";
+	// echo mktime(9, 41, 33, 8, 3, 2018)."<br>";
+	
+	echo date('Y-m-d H:i:s')."<br>";
+	// echo date('d.m.y')."<br>";
+	
+	// Podejście obiektowe
+	
+	$dataczas = new DateTime(); // tworzecie obiektu
+	
+	echo $dataczas->format('Y-m-d H:i:s')."<br>".print_r($dataczas); 
+	// operator strzałki pozwala dostać sie do metody lub własciwości obiektu
+	
+	$dzien = 30;
+	$miesiac = 2;		
+	$rok= 1875;
+	
+	if (checkdate($miesiac, $dzien, $rok)) 
+		echo "<br>Poprawna data!";
+	else echo "<br>Niepoprawna data!";
+	// po amerykańsku najpierw jest miesiąc!!
