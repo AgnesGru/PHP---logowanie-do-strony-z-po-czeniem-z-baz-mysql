@@ -31,9 +31,23 @@
 	echo"|<b>Zboże</b>:".$_SESSION['zboze']."</p>";
 	
 	echo"<p><b>E-mail</b>:".$_SESSION['email'];
-	echo"<br/><b>Dni Premium</b>:".$_SESSION['dnipremium']."</p>";
-
-
+	echo"<br/><b>Data wygaśnięcia Premium</b>:".$_SESSION['dnipremium']."</p>";
+	
+	$dataczas = new DateTime('2020-01-06 22:30:15');
+	// tworzecie obiektu
+	
+	echo "Data i czas serwera: ".$dataczas->format('Y-m-d H:i:s')."<br>";
+	
+	$koniec = DateTime::createFromFormat('Y-m-d H:i:s', $_SESSION['dnipremium']);
+	
+	$roznica = $dataczas->diff($koniec);
+	
+	if ($dataczas<$koniec)
+	echo 'Pozostało promium: '.$roznica->format('%y lat, %m mies, %d dni, %h godz, %i min, %s dek');
+	else
+	echo 'Premium nie aktywne od: '.$roznica->format('%y lat, %m mies, %d dni, %h godz, %i min, %s dek');
+	
+	
 ?>
 
 </body>

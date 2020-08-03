@@ -85,6 +85,7 @@
 		
 		// zapamiętywanie wprowadzonych danych w formularzu
 		$_SESSION['fr_nick'] = $nick;
+		// formularz rejestracji fr
 		$_SESSION['fr_email'] = $email;
 		$_SESSION['fr_haslo1'] = $haslo1;
 		$_SESSION['fr_haslo2'] = $haslo2;
@@ -132,7 +133,7 @@
 				if ($wszystko_ok == true)
 				{
 					// Hura, wszystkie testy zaliczone, dodajemy gracza do bazy		
-					if($polaczenie->query("INSERT INTO uzytkownicy VALUES (NULL, '$nick', '$haslo_hash', '$email', 100, 100, 100, 14)"))
+					if($polaczenie->query("INSERT INTO uzytkownicy VALUES (NULL, '$nick', '$haslo_hash', '$email', 100, 100, 100, now() + INTERVAL 14 DAY)"))
 					{
 						$_SESSION['udanarejestracja']=true;
 						// zmienna sesyjna $_SESSION['udanarejestracja']
@@ -187,6 +188,7 @@
 		Nickname: <br/> <input type = "text" value="<?php
 			if (isset($_SESSION['fr_nick']))
 			{
+				// zapamiętywanie danych wprowadzonych przez użytkownika w formularzu
 				echo $_SESSION['fr_nick'];
 				unset($_SESSION['fr_nick']);
 			}
